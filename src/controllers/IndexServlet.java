@@ -28,7 +28,6 @@ public class IndexServlet extends HttpServlet {
      */
     public IndexServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -44,6 +43,11 @@ public class IndexServlet extends HttpServlet {
         em.close();
 
         request.setAttribute("tasks", tasks);
+
+        if(request.getSession().getAttribute("flush") != null) {
+            request.setAttribute("flush", request.getSession().getAttribute("flush"));
+            request.getSession().removeAttribute("flush");
+        }
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/index.jsp");
         rd.forward(request, response);
